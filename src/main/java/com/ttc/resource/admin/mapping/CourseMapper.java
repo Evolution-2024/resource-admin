@@ -1,9 +1,9 @@
 package com.ttc.resource.admin.mapping;
 
 import com.ttc.resource.admin.domain.model.entity.Course;
-import com.ttc.resource.admin.resource.CourseResource;
-import com.ttc.resource.admin.resource.CreateCourseResource;
-import com.ttc.resource.admin.resource.UpdateCourseResource;
+import com.ttc.resource.admin.resource.course.CourseResource;
+import com.ttc.resource.admin.resource.course.CreateCourseResource;
+import com.ttc.resource.admin.resource.course.UpdateCourseResource;
 import com.ttc.resource.shared.mapping.EnhancedModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

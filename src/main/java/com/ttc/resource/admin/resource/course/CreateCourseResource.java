@@ -1,4 +1,4 @@
-package com.ttc.resource.admin.resource;
+package com.ttc.resource.admin.resource.course;
 
 import lombok.Data;
 
