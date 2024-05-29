@@ -23,7 +23,7 @@ public class Course extends AuditModel {
 
     @NotNull
     @NotBlank
-    @Size(max = 120)
+    @Size(max = 300)
     private String name;
 
     @NotNull
