@@ -8,4 +8,7 @@ public class MappingConfiguration {
 
     @Bean
     public CourseMapper courseMapper() { return new CourseMapper(); }
+
+    @Bean
+    public GradeMapper gradeMapper() { return new GradeMapper(); }
 }
