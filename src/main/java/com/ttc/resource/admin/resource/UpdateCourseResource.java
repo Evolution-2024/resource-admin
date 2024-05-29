@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 public class UpdateCourseResource {
     @NotNull
     @NotBlank
-    @Size(max = 120)
+    @Size(max = 300)
     private String name;
 
     @NotNull
