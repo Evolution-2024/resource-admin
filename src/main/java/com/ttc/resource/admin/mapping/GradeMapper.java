@@ -1,6 +1,6 @@
 package com.ttc.resource.admin.mapping;
 
-import com.ttc.resource.admin.api.model.entity.Grade;
+import com.ttc.resource.admin.domain.model.entity.Grade;
 import com.ttc.resource.admin.resource.grade.GradeResource;
 import com.ttc.resource.admin.resource.grade.CreateGradeResource;
 import com.ttc.resource.admin.resource.grade.UpdateGradeResource;

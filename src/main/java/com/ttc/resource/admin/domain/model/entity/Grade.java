@@ -1,4 +1,4 @@
-package com.ttc.resource.admin.api.model.entity;
+package com.ttc.resource.admin.domain.model.entity;
 
 import com.ttc.resource.shared.domain.model.AuditModel;
 import lombok.AllArgsConstructor;

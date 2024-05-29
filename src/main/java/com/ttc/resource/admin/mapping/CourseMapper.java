@@ -1,6 +1,6 @@
 package com.ttc.resource.admin.mapping;
 
-import com.ttc.resource.admin.api.model.entity.Course;
+import com.ttc.resource.admin.domain.model.entity.Course;
 import com.ttc.resource.admin.resource.CourseResource;
 import com.ttc.resource.admin.resource.CreateCourseResource;
 import com.ttc.resource.admin.resource.UpdateCourseResource;
