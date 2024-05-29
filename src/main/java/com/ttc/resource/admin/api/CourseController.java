@@ -33,7 +33,7 @@ public class CourseController {
         parameters.put("id", id);
         return mapper.modelListToPage(courseService.getAll(parameters), pageable);
     }
-    @PostMapping("courses")
+    @PostMapping
     public CourseResource createCourse(@RequestBody CreateCourseResource request) {
 
         var course = courseService.create(mapper.toModel(request));
