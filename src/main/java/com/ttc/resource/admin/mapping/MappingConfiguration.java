@@ -11,4 +11,7 @@ public class MappingConfiguration {
 
     @Bean
     public GradeMapper gradeMapper() { return new GradeMapper(); }
+
+    @Bean
+    public SectionMapper sectionMapper() { return new SectionMapper(); }
 }

@@ -5,8 +5,6 @@ import com.ttc.resource.admin.domain.persistence.GradeRepository;
 import com.ttc.resource.admin.domain.service.GradeService;
 import com.ttc.resource.shared.exception.ResourceNotFoundException;
 import com.ttc.resource.shared.exception.ResourceValidationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
