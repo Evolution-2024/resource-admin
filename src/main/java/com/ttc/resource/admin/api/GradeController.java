@@ -36,10 +36,10 @@ public class GradeController {
         return mapper.modelListToPage(gradeService.getByFilter(parameters), pageable);
     }
 
-//    @PostMapping
-//    public Grade postGrade(@RequestBody CreateGradeResource resource) {
-//        return gradeService.create(mapper.toModel(resource));
-//    }
+    @PostMapping
+    public Grade postGrade(@RequestBody CreateGradeResource resource) {
+        return gradeService.create(mapper.toModel(resource));
+    }
 //
 //    @PutMapping("{gradeId}")
 //    public Grade putGrade(@PathVariable Long gradeId, @RequestBody UpdateGradeResource resource) {

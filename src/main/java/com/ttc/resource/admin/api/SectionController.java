@@ -24,21 +24,23 @@ public class SectionController {
     @Autowired
     private SectionMapper mapper;
 
-    @GetMapping()
+    @GetMapping
     public Page<SectionResource> getAll(
-            @RequestParam(required = false) String filter,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String code,
             @RequestParam(required = false) Long id,
             Pageable pageable
     ) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("filter", filter);
+        parameters.put("name", name);
+        parameters.put("code", code);
         parameters.put("id", id);
         return mapper.modelListToPage(sectionService.getByFilter(parameters), pageable);
     }
 
-    @PostMapping("section/{gradeId}")
-    public SectionResource postSection(@PathVariable Long gradeId, @RequestBody CreateSectionResource resource) {
-        return mapper.toResource(sectionService.create(gradeId, mapper.toModel(resource)));
+    @PostMapping
+    public SectionResource postSection(@RequestBody CreateSectionResource resource) {
+        return mapper.toResource(sectionService.create(resource.getGradeId(), mapper.toModel(resource)));
     }
 
     @PutMapping("{sectionId}")
@@ -46,8 +48,8 @@ public class SectionController {
         return mapper.toResource(sectionService.update(sectionId, mapper.toModel(resource)));
     }
 
-    @DeleteMapping("{gradeId}")
-    public ResponseEntity<?> deleteSection(@PathVariable Long gradeId) {
-        return sectionService.delete(gradeId);
+    @DeleteMapping("{sectionId}")
+    public ResponseEntity<?> deleteSection(@PathVariable Long sectionId) {
+        return sectionService.delete(sectionId);
     }
 }

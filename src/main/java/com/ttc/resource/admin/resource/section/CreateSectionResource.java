@@ -22,4 +22,6 @@ public class CreateSectionResource {
     @NotBlank
     @Size(max = 300)
     private String description;
+
+    private Long gradeId;
 }
