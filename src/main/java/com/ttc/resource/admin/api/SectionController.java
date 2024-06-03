@@ -26,15 +26,15 @@ public class SectionController {
 
     @GetMapping
     public Page<SectionResource> getAll(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String code,
+            @RequestParam(required = false) String filter,
             @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Long gradeId,
             Pageable pageable
     ) {
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("name", name);
-        parameters.put("code", code);
+        parameters.put("filter", filter);
         parameters.put("id", id);
+        parameters.put("gradeId", gradeId);
         return mapper.modelListToPage(sectionService.getByFilter(parameters), pageable);
     }
 

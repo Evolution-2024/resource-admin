@@ -30,9 +30,9 @@ public class SectionServiceImpl implements SectionService {
     @Override
     public List<Section> getByFilter(Map<String, Object> parameters) {
         Long id = (Long) parameters.get("id");
-        String name = (String) parameters.get("name");
-        String code = (String) parameters.get("code");
-        return sectionRepository.findByFilter(name, code, id);
+        Long gradeId = (Long) parameters.get("gradeId");
+        String filter = (String) parameters.get("filter");
+        return sectionRepository.findByFilter(filter, id, gradeId);
     }
 
     @Override

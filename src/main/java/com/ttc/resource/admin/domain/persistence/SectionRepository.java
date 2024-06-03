@@ -11,12 +11,12 @@ import java.util.List;
 @Repository
 public interface SectionRepository extends JpaRepository<Section, Long> {
     @Query(value = "select g from Section g " +
-            "where (g.name like concat('%', :name, '%') or :name is null) " +
-            "and (g.code like concat('%', :code, '%') or :code is null) " +
+            "where (g.name like concat('%', :filter, '%') or g.code like concat('%', :filter, '%') or :filter is null) " +
+            "and (g.grade.id = :gradeId or :gradeId is null) " +
             "and (g.id = :id or :id is null)")
     List<Section> findByFilter(
-            @Param("name") String name,
-            @Param("code") String code,
-            @Param("id") Long id
+            @Param("filter") String filter,
+            @Param("id") Long id,
+            @Param("gradeId") Long gradeId
     );
 }
