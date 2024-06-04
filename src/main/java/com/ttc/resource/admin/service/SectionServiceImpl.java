@@ -5,9 +5,12 @@ import com.ttc.resource.admin.domain.model.entity.Section;
 import com.ttc.resource.admin.domain.persistence.GradeRepository;
 import com.ttc.resource.admin.domain.persistence.SectionRepository;
 import com.ttc.resource.admin.domain.service.SectionService;
+import com.ttc.resource.shared.domain.constants.ConstantsService;
 import com.ttc.resource.shared.exception.ResourceNotFoundException;
 import com.ttc.resource.shared.exception.ResourceValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +35,12 @@ public class SectionServiceImpl implements SectionService {
         Long id = (Long) parameters.get("id");
         Long gradeId = (Long) parameters.get("gradeId");
         String filter = (String) parameters.get("filter");
-        return sectionRepository.findByFilter(filter, id, gradeId);
+
+        int page = Integer.parseInt((String) parameters.get(ConstantsService.PAGE));
+        int size = Integer.parseInt((String) parameters.get(ConstantsService.SIZE));
+        Pageable pageable = PageRequest.of(page, size);
+
+        return sectionRepository.findByFilter(filter, id, gradeId, pageable).getContent();
     }
 
     @Override

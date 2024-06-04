@@ -3,8 +3,11 @@ package com.ttc.resource.admin.service;
 import com.ttc.resource.admin.domain.model.entity.Grade;
 import com.ttc.resource.admin.domain.persistence.GradeRepository;
 import com.ttc.resource.admin.domain.service.GradeService;
+import com.ttc.resource.shared.domain.constants.ConstantsService;
 import com.ttc.resource.shared.exception.ResourceNotFoundException;
 import com.ttc.resource.shared.exception.ResourceValidationException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +32,12 @@ public class GradeServiceImpl implements GradeService {
     public List<Grade> getByFilter(Map<String, Object> parameters) {
         Long id = (Long) parameters.get("id");
         String filter = (String) parameters.get("filter");
-        return gradeRepository.findByFilter(filter, id);
+
+        int page = Integer.parseInt((String) parameters.get(ConstantsService.PAGE));
+        int size = Integer.parseInt((String) parameters.get(ConstantsService.SIZE));
+        Pageable pageable = PageRequest.of(page, size);
+
+        return gradeRepository.findByFilter(filter, id, pageable).getContent();
     }
 
     @Override

@@ -7,13 +7,20 @@ import com.ttc.resource.admin.resource.grade.GradeResource;
 import com.ttc.resource.admin.resource.section.CreateSectionResource;
 import com.ttc.resource.admin.resource.section.SectionResource;
 import com.ttc.resource.admin.resource.section.UpdateSectionResource;
+import com.ttc.resource.shared.domain.constants.ConstantsService;
+import com.ttc.resource.shared.domain.constants.DefaultParams;
+import com.ttc.resource.shared.domain.service.communication.BaseResponse;
+import com.ttc.resource.shared.exception.ResourceNotFoundException;
+import com.ttc.resource.shared.exception.ResourceValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -25,27 +32,56 @@ public class SectionController {
     private SectionMapper mapper;
 
     @GetMapping
-    public Page<SectionResource> getAll(
+    public  ResponseEntity<BaseResponse<List<SectionResource>>> getAll(
             @RequestParam(required = false) String filter,
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) Long gradeId,
-            Pageable pageable
+            @RequestParam(defaultValue = DefaultParams.PAGE) String page,
+            @RequestParam(defaultValue = DefaultParams.SIZE) String size
     ) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("filter", filter);
         parameters.put("id", id);
         parameters.put("gradeId", gradeId);
-        return mapper.modelListToPage(sectionService.getByFilter(parameters), pageable);
+        parameters.put(ConstantsService.PAGE, page);
+        parameters.put(ConstantsService.SIZE, size);
+        BaseResponse<List<SectionResource>> response = null;
+        try {
+            List<SectionResource> list = mapper.modelListToResource(sectionService.getByFilter(parameters));
+            response = new BaseResponse<>(list);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception e) {
+            response = new BaseResponse<>(e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping
-    public SectionResource postSection(@RequestBody CreateSectionResource resource) {
-        return mapper.toResource(sectionService.create(resource.getGradeId(), mapper.toModel(resource)));
+    public ResponseEntity<BaseResponse<SectionResource>> postSection(@RequestBody CreateSectionResource request) {
+        BaseResponse<SectionResource> response = null;
+        try {
+            var section = sectionService.create(request.getGradeId(), mapper.toModel(request));
+            SectionResource resource = mapper.toResource(section);
+            response = new BaseResponse<>(resource);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (ResourceValidationException | ResourceNotFoundException e) {
+            response = new BaseResponse<>(e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("{sectionId}")
-    public SectionResource putSection(@PathVariable Long sectionId, @RequestBody UpdateSectionResource resource) {
-        return mapper.toResource(sectionService.update(sectionId, mapper.toModel(resource)));
+    public ResponseEntity<BaseResponse<SectionResource>> putSection(@PathVariable Long sectionId, @RequestBody UpdateSectionResource request) {
+        BaseResponse<SectionResource> response = null;
+        try {
+            var section = sectionService.update(sectionId, mapper.toModel(request));
+            SectionResource resource = mapper.toResource(section);
+            response = new BaseResponse<>(resource);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (ResourceValidationException | ResourceNotFoundException e) {
+            response = new BaseResponse<>(e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @DeleteMapping("{sectionId}")
