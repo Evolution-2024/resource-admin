@@ -3,9 +3,11 @@ package com.ttc.resource.admin.service;
 import com.ttc.resource.admin.domain.model.entity.Course;
 import com.ttc.resource.admin.domain.persistence.CourseRepository;
 import com.ttc.resource.admin.domain.service.CourseService;
+import com.ttc.resource.shared.domain.constants.ConstantsService;
 import com.ttc.resource.shared.exception.ResourceValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,15 +29,19 @@ public class CourseServiceImpl implements CourseService {
     private Validator validator;
 
     @Override
-    public List<Course> getAll() {
+    public List<Course> getByFilter() {
         return null;
     }
 
     @Override
-    public List<Course> getAll(Map<String, Object> parameters) {
+    public List<Course> getByFilter(Map<String, Object> parameters) {
         String filter = (String) parameters.get("filter");
         Long id = (Long) parameters.get("id");
-        return courseRepository.findByFilter(filter,id);
+
+        int page = Integer.parseInt((String) parameters.get(ConstantsService.PAGE));
+        int size = Integer.parseInt((String) parameters.get(ConstantsService.SIZE));
+        Pageable pageable = PageRequest.of(page, size);
+        return courseRepository.findByFilter(filter,id,pageable).getContent();
     }
 
     @Override

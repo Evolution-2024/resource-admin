@@ -4,10 +4,13 @@ import com.ttc.resource.admin.domain.model.entity.Topic;
 import com.ttc.resource.admin.domain.persistence.CourseRepository;
 import com.ttc.resource.admin.domain.persistence.TopicRepository;
 import com.ttc.resource.admin.domain.service.TopicService;
+import com.ttc.resource.shared.domain.constants.ConstantsService;
 import com.ttc.resource.shared.domain.service.communication.BaseResponse;
 import com.ttc.resource.shared.exception.ResourceNotFoundException;
 import com.ttc.resource.shared.exception.ResourceValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +35,11 @@ public class TopicServiceImpl implements TopicService {
         String filter = (String) parameters.get("filter");
         Long id = (Long) parameters.get("id");
         Long courseId = (Long) parameters.get("courseId");
-        return topicRepository.findByFilter(filter,id,courseId);
+
+        int page = Integer.parseInt((String) parameters.get(ConstantsService.PAGE));
+        int size = Integer.parseInt((String) parameters.get(ConstantsService.SIZE));
+        Pageable pageable = PageRequest.of(page, size);
+        return topicRepository.findByFilter(filter,id,courseId,pageable).getContent();
     }
 
     @Override

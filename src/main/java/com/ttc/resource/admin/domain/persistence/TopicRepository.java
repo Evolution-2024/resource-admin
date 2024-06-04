@@ -18,9 +18,10 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
             "where (t.title like concat('%', :filter, '%') or :filter is null) " +
             "and (t.course.id = :courseId or :courseId is null) " +
             "and (t.id = :id or :id is null)")
-    List<Topic> findByFilter(
+    Page<Topic> findByFilter(
             @Param("filter") String filter,
             @Param("id") Long id,
-            @Param("courseId") Long courseId
+            @Param("courseId") Long courseId,
+            Pageable pageable
     );
 }
