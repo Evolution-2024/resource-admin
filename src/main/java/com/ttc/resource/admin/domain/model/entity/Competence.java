@@ -7,7 +7,6 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -15,16 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 @With
 @Data
-@Table(name = "courses")
-public class Course extends AuditModel {
-
+@Table(name = "competences")
+public class Competence extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     @NotBlank
-    @Size(max = 300)
     private String name;
 
     @NotNull
@@ -33,11 +30,8 @@ public class Course extends AuditModel {
     @Type(type = "org.hibernate.type.TextType")
     private String description;
 
-    @OneToMany( mappedBy = "course", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    List<Topic> topics;
+    @ManyToMany(mappedBy = "competences")
+    private List<Course> courses;
 
-    @ManyToMany
-    @JoinTable(name="competence_course", joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "competence_id"))
-    private List<Competence> competences;
+
 }

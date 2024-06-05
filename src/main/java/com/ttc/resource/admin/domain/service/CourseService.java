@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface CourseService {
     List<Course> getByFilter();
-     List<Course> getByFilter(Map<String, Object> parameters);
+    List<Course> getByFilter(Map<String, Object> parameters);
     Course getById(Long courseId);
     Course create(Course course);
     Course update(Long courseId, Course request);

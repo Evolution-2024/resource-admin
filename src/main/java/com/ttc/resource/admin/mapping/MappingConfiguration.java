@@ -14,4 +14,6 @@ public class MappingConfiguration {
     public SectionMapper sectionMapper() { return new SectionMapper(); }
     @Bean
     public TopicMapper topicMapper() { return new TopicMapper(); }
+    @Bean
+    public CompetenceMapper competenceMapper() { return new CompetenceMapper(); }
 }
