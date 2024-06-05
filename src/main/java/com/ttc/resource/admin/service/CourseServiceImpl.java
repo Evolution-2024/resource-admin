@@ -4,6 +4,7 @@ import com.ttc.resource.admin.domain.model.entity.Course;
 import com.ttc.resource.admin.domain.persistence.CourseRepository;
 import com.ttc.resource.admin.domain.service.CourseService;
 import com.ttc.resource.shared.domain.constants.ConstantsService;
+import com.ttc.resource.shared.exception.ResourceNotFoundException;
 import com.ttc.resource.shared.exception.ResourceValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -64,8 +65,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course update(Long courseId, Course request) {
-        return null;
+    public Course update(Course request) {
+        Set<ConstraintViolation<Course>> violations = validator.validate(request);
+        if (!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+
+        return courseRepository.findById(request.getId()).map(course ->
+                courseRepository.save(course
+                        .withName(request.getName())
+                        .withDescription(request.getDescription())
+                        .withCompetences(request.getCompetences())
+        )).orElseThrow(() -> new ResourceNotFoundException(ENTITY, request.getId()));
     }
 
     @Override

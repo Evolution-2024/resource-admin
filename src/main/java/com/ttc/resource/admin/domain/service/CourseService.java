@@ -11,7 +11,7 @@ public interface CourseService {
     List<Course> getByFilter(Map<String, Object> parameters);
     Course getById(Long courseId);
     Course create(Course course);
-    Course update(Long courseId, Course request);
+    Course update(Course request);
     ResponseEntity<?> delete(Long courseId);
 //    List<Competence> getAllCompetences_Course(Long courseId);
 //    void linkCompetencesToCourse(Long courseId, List<Long> competenceIds);

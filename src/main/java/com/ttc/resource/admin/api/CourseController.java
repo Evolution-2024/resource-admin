@@ -4,6 +4,7 @@ import com.ttc.resource.admin.domain.service.CourseService;
 import com.ttc.resource.admin.mapping.CourseMapper;
 import com.ttc.resource.admin.resource.course.CourseResource;
 import com.ttc.resource.admin.resource.course.CreateCourseResource;
+import com.ttc.resource.admin.resource.course.UpdateCourseResource;
 import com.ttc.resource.shared.domain.constants.ConstantsService;
 import com.ttc.resource.shared.domain.constants.DefaultParams;
 import com.ttc.resource.shared.domain.service.communication.BaseResponse;
@@ -56,6 +57,19 @@ public class CourseController {
         BaseResponse<CourseResource> response = null;
         try {
             var course = courseService.create(mapper.toModel(request));
+            CourseResource resource = mapper.toResource(course);
+            response = new BaseResponse<>(resource);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (ResourceValidationException | ResourceNotFoundException e) {
+            response = new BaseResponse<>(e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PutMapping
+    public ResponseEntity<BaseResponse<CourseResource>> updateCourse(@RequestBody UpdateCourseResource request) {
+        BaseResponse<CourseResource> response = null;
+        try {
+            var course = courseService.update(mapper.toModel(request));
             CourseResource resource = mapper.toResource(course);
             response = new BaseResponse<>(resource);
             return new ResponseEntity<>(response, HttpStatus.OK);
