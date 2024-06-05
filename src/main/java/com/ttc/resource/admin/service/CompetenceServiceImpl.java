@@ -32,11 +32,12 @@ public class CompetenceServiceImpl implements CompetenceService {
     public List<Competence> getByFilter(Map<String, Object> parameters) {
         String filter = (String) parameters.get("filter");
         Long id = (Long) parameters.get("id");
+        Long courseId = (Long) parameters.get("courseId");
 
         int page = Integer.parseInt((String) parameters.get(ConstantsService.PAGE));
         int size = Integer.parseInt((String) parameters.get(ConstantsService.SIZE));
         Pageable pageable = PageRequest.of(page, size);
-        return competenceRepository.findByFilter(filter,id,pageable).getContent();
+        return competenceRepository.findByFilter(filter,id,courseId,pageable).getContent();
     }
 
     @Override

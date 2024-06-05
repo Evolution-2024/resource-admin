@@ -1,10 +1,12 @@
 package com.ttc.resource.admin.resource.course;
 
+import com.ttc.resource.admin.resource.competence.CompetenceResource;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 public class CreateCourseResource {
@@ -16,4 +18,5 @@ public class CreateCourseResource {
     @NotNull
     @NotBlank
     private String description;
+    private List<CompetenceResource> competences;
 }

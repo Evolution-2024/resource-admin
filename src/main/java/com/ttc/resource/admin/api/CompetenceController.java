@@ -30,12 +30,14 @@ public class CompetenceController {
     public ResponseEntity<BaseResponse<List<CompetenceResource>>> getAllCompetences(
             @RequestParam(required = false) String filter,
             @RequestParam(required = false) Long id,
+            @RequestParam(required = false) Long courseId,
             @RequestParam(defaultValue = DefaultParams.PAGE) String page,
             @RequestParam(defaultValue = DefaultParams.SIZE) String size
     ) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("filter", filter);
         parameters.put("id", id);
+        parameters.put("courseId", courseId);
         parameters.put(ConstantsService.PAGE, page);
         parameters.put(ConstantsService.SIZE, size);
         BaseResponse<List<CompetenceResource>> response = null;
