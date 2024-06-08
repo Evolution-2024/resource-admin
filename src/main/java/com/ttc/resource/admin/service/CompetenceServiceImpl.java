@@ -4,6 +4,7 @@ import com.ttc.resource.admin.domain.model.entity.Competence;
 import com.ttc.resource.admin.domain.persistence.CompetenceRepository;
 import com.ttc.resource.admin.domain.service.CompetenceService;
 import com.ttc.resource.shared.domain.constants.ConstantsService;
+import com.ttc.resource.shared.exception.ResourceNotFoundException;
 import com.ttc.resource.shared.exception.ResourceValidationException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -50,12 +51,25 @@ public class CompetenceServiceImpl implements CompetenceService {
     }
 
     @Override
-    public Competence update(Long competenceId, Competence request) {
-        return null;
+    public Competence update(Competence request) {
+        Set<ConstraintViolation<Competence>> violations = validator.validate(request);
+        if (!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+
+        return competenceRepository.findById(request.getId()).map(competence ->
+                competenceRepository.save(competence
+                        .withName(request.getName())
+                        .withDescription(request.getDescription())
+                )).orElseThrow(() -> new ResourceNotFoundException(ENTITY, request.getId()));
     }
 
     @Override
     public ResponseEntity<?> delete(Long competenceId) {
-        return null;
+        var competence_course = competenceRepository.existsByCourses(competenceId);
+        if (competence_course) throw new ResourceValidationException(ENTITY, "Esta competencia tiene cursos asignados");
+        return competenceRepository.findById(competenceId).map(competence -> {
+            competenceRepository.delete(competence);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, competenceId));
     }
 }

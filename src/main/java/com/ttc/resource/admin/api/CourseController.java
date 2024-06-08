@@ -80,7 +80,6 @@ public class CourseController {
     }
     @DeleteMapping("{courseId}")
     public ResponseEntity<?> deleteCourse(@PathVariable Long courseId) {
-//        return courseService.delete(courseId);
         try {
             return courseService.delete(courseId);
         } catch (ResourceValidationException | ResourceNotFoundException e) {

@@ -9,6 +9,6 @@ import java.util.Map;
 public interface CompetenceService {
     List<Competence> getByFilter(Map<String, Object> parameters);
     Competence create(Competence competence);
-    Competence update(Long competenceId, Competence request);
+    Competence update(Competence request);
     ResponseEntity<?> delete(Long competenceId);
 }

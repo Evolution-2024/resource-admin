@@ -4,6 +4,7 @@ import com.ttc.resource.admin.domain.service.CompetenceService;
 import com.ttc.resource.admin.mapping.CompetenceMapper;
 import com.ttc.resource.admin.resource.competence.CompetenceResource;
 import com.ttc.resource.admin.resource.competence.CreateCompetenceResource;
+import com.ttc.resource.admin.resource.competence.UpdateCompetenceResource;
 import com.ttc.resource.shared.domain.constants.ConstantsService;
 import com.ttc.resource.shared.domain.constants.DefaultParams;
 import com.ttc.resource.shared.domain.service.communication.BaseResponse;
@@ -52,8 +53,6 @@ public class CompetenceController {
     }
     @PostMapping
     public ResponseEntity<BaseResponse<CompetenceResource>> createCompetence(@RequestBody CreateCompetenceResource request) {
-
-//        return mapper.toResource(competenceService.create(mapper.toModel(request)));
         BaseResponse<CompetenceResource> response = null;
         try {
             CompetenceResource resource = mapper.toResource(competenceService.create(mapper.toModel(request)));
@@ -62,6 +61,27 @@ public class CompetenceController {
         } catch (ResourceValidationException | ResourceNotFoundException e) {
             response = new BaseResponse<>(e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PutMapping
+    public ResponseEntity<BaseResponse<CompetenceResource>> updateCompetence(@RequestBody UpdateCompetenceResource request) {
+        BaseResponse<CompetenceResource> response = null;
+        try {
+            var competence = competenceService.update(mapper.toModel(request));
+            CompetenceResource resource = mapper.toResource(competence);
+            response = new BaseResponse<>(resource);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (ResourceValidationException | ResourceNotFoundException e) {
+            response = new BaseResponse<>(e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+    @DeleteMapping("{competenceId}")
+    public ResponseEntity<?> deleteCompetence(@PathVariable Long competenceId) {
+        try {
+            return competenceService.delete(competenceId);
+        } catch (ResourceValidationException | ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

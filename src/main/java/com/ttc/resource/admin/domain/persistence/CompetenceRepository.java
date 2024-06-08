@@ -22,4 +22,8 @@ public interface CompetenceRepository extends JpaRepository<Competence, Long> {
             @Param("courseId") Long courseId,
             Pageable pageable
     );
+    @Query("select case when count(c) > 0 then true else false end from Competence c " +
+            "join c.courses cr " +
+            "where c.id = :competenceId")
+    boolean existsByCourses(@Param("competenceId") Long competenceId);
 }
