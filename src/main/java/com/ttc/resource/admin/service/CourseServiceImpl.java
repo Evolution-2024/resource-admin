@@ -80,6 +80,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public ResponseEntity<?> delete(Long courseId) {
-        return null;
+        return courseRepository.findById(courseId).map(course -> {
+            courseRepository.delete(course);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, courseId));
     }
 }

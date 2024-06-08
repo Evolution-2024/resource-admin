@@ -78,4 +78,13 @@ public class CourseController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
+    @DeleteMapping("{courseId}")
+    public ResponseEntity<?> deleteCourse(@PathVariable Long courseId) {
+//        return courseService.delete(courseId);
+        try {
+            return courseService.delete(courseId);
+        } catch (ResourceValidationException | ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
