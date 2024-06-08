@@ -7,6 +7,6 @@ public class AnnouncementResource {
     private Long id;
     private String title;
     private String description;
-    private Long sectionId;
+    private Long teacherId;
     private Long studentId;
 }
