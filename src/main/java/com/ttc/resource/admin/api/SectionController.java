@@ -74,7 +74,7 @@ public class SectionController {
     public ResponseEntity<BaseResponse<SectionResource>> putSection(@RequestBody UpdateSectionResource request) {
         BaseResponse<SectionResource> response = null;
         try {
-            var section = sectionService.update(request.getSectionId(), mapper.toModel(request));
+            var section = sectionService.update(request.getId(), mapper.toModel(request));
             SectionResource resource = mapper.toResource(section);
             response = new BaseResponse<>(resource);
             return new ResponseEntity<>(response, HttpStatus.OK);
