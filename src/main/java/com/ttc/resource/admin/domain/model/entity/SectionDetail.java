@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @With
 @Data
-@Table(name = "sectiondetails")
+@Table(name = "section_detail")
 public class SectionDetail extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
