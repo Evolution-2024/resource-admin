@@ -8,5 +8,6 @@ import javax.validation.constraints.Size;
 
 @Data
 public class UpdateSectionDetailResource {
+    private Long id;
     private String studentUsername;
 }

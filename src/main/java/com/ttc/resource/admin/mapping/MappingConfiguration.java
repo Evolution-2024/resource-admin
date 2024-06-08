@@ -15,6 +15,8 @@ public class MappingConfiguration {
 
     @Bean
     public SectionDetailMapper sectionDetailMapper() { return new SectionDetailMapper(); }
+    @Bean
+    public AnnouncementMapper announcementMapper() { return new AnnouncementMapper(); }
 
     @Bean
     public TopicMapper topicMapper() { return new TopicMapper(); }
