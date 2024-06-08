@@ -5,7 +5,6 @@ import com.ttc.resource.admin.domain.persistence.CourseRepository;
 import com.ttc.resource.admin.domain.persistence.TopicRepository;
 import com.ttc.resource.admin.domain.service.TopicService;
 import com.ttc.resource.shared.domain.constants.ConstantsService;
-import com.ttc.resource.shared.domain.service.communication.BaseResponse;
 import com.ttc.resource.shared.exception.ResourceNotFoundException;
 import com.ttc.resource.shared.exception.ResourceValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +54,24 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Topic update(Long topicId, Topic request) {
-        return null;
+    public Topic update(Topic request) {
+        Set<ConstraintViolation<Topic>> violations = validator.validate(request);
+        if (!violations.isEmpty())
+            throw new ResourceValidationException(ENTITY, violations);
+
+        return topicRepository.findById(request.getId()).map(topic ->
+                topicRepository.save(topic
+                        .withTitle(request.getTitle())
+                        .withDescription(request.getDescription())
+                        .withFile(request.getFile())
+                )).orElseThrow(() -> new ResourceNotFoundException(ENTITY, request.getId()));
     }
 
     @Override
     public ResponseEntity<?> delete(Long itemId) {
-        return null;
+        return topicRepository.findById(itemId).map(topic -> {
+            topicRepository.delete(topic);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, itemId));
     }
 }

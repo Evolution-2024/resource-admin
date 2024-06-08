@@ -4,6 +4,7 @@ import com.ttc.resource.admin.domain.service.TopicService;
 import com.ttc.resource.admin.mapping.TopicMapper;
 import com.ttc.resource.admin.resource.topic.CreateTopicResource;
 import com.ttc.resource.admin.resource.topic.TopicResource;
+import com.ttc.resource.admin.resource.topic.UpdateTopicResource;
 import com.ttc.resource.shared.domain.constants.ConstantsService;
 import com.ttc.resource.shared.domain.constants.DefaultParams;
 import com.ttc.resource.shared.domain.service.communication.BaseResponse;
@@ -61,6 +62,27 @@ public class TopicController {
         } catch (ResourceValidationException | ResourceNotFoundException e) {
             response = new BaseResponse<>(e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+    @PutMapping
+    public ResponseEntity<BaseResponse<TopicResource>> updateTopic(@RequestBody UpdateTopicResource request) {
+        BaseResponse<TopicResource> response = null;
+        try {
+            var course = topicService.update(mapper.toModel(request));
+            TopicResource resource = mapper.toResource(course);
+            response = new BaseResponse<>(resource);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (ResourceValidationException | ResourceNotFoundException e) {
+            response = new BaseResponse<>(e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+    @DeleteMapping("{topicId}")
+    public ResponseEntity<?> deleteTopic(@PathVariable Long topicId) {
+        try {
+            return topicService.delete(topicId);
+        } catch (ResourceValidationException | ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 }

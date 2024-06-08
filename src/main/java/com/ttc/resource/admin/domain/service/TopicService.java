@@ -11,6 +11,6 @@ import java.util.Map;
 public interface TopicService {
     List<Topic> getByFilter(Map<String, Object> parameters);
     Topic create(Topic request, Long courseId);
-    Topic update(Long topicId, Topic request);
+    Topic update(Topic request);
     ResponseEntity<?> delete(Long itemId);
 }
