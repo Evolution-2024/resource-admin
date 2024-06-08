@@ -8,6 +8,8 @@ import javax.validation.constraints.Size;
 
 @Data
 public class UpdateSectionResource {
+    private Long id;
+
     @NotNull
     @NotBlank
     @Size(max = 300)
@@ -22,6 +24,4 @@ public class UpdateSectionResource {
     @NotBlank
     @Size(max = 300)
     private String description;
-
-    private Long sectionId;
 }
