@@ -22,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/v1/announcements")
 public class AnnouncementController {
+    /*Announcements*/
     @Autowired
     AnnouncementService announcementService;
     @Autowired
