@@ -8,4 +8,5 @@ public class TopicResource {
     private String title;
     private String description;
     private String file;
+    private Long courseId;
 }
