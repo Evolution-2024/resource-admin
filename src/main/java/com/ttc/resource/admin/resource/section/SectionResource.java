@@ -8,4 +8,5 @@ public class SectionResource {
     private String code;
     private String name;
     private String description;
+    private Long gradeId;
 }

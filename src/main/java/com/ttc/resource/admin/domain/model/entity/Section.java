@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -43,4 +44,7 @@ public class Section extends AuditModel {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "grade_id", nullable = false)
     private Grade grade;
+
+    @OneToMany( mappedBy = "section", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    List<SectionDetail> details;
 }
