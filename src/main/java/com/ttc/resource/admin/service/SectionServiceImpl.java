@@ -49,6 +49,7 @@ public class SectionServiceImpl implements SectionService {
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
         return gradeRepository.findById(gradeId).map(grade -> {
+            section.setId(null);
             section.setGrade(grade);
             return sectionRepository.save(section);
         }).orElseThrow(()->new ResourceNotFoundException("Grade ",gradeId));

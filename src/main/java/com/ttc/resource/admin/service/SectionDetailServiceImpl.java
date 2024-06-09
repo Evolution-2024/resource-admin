@@ -58,6 +58,13 @@ public class SectionDetailServiceImpl implements SectionDetailService {
         if(user.getStatusCode()!= HttpStatus.OK)
             throw new ResourceNotFoundException("User", studentId);
 
+        var exist = sectionDetailRepository.existsBySectionIdAndStudentId(sectionId, studentId);
+        if(exist)
+            throw new ResourceNotFoundException("Estudiante ya asignado a la sección");
+        if (sectionDetailRepository.existsByStudentId(studentId)) {
+            throw new ResourceNotFoundException("Estudiante ya asignado a otra sección");
+        }
+
         return sectionRepository.findById(sectionId).map(section -> {
             sectionDetail.setSection(section);
             sectionDetail.setStudentId(studentId);
@@ -65,25 +72,25 @@ public class SectionDetailServiceImpl implements SectionDetailService {
         }).orElseThrow(()->new ResourceNotFoundException("Setion ",sectionId));
     }
 
-    /*@Override
-    public SectionDetail update(Long sectionDetailId, SectionDetail sectionDetail) {
-        Set<ConstraintViolation<SectionDetail>> violations = validator.validate(sectionDetail);
-        if (!violations.isEmpty())
-            throw new ResourceValidationException(ENTITY, violations);
-
-        return sectionDetailRepository.findById(sectionDetailId).map(data ->
-                sectionDetailRepository.save(
-                        data.withName(sectionDetail.getName())
-                                .withDescription(sectionDetail.getDescription())
-                                .withCode(sectionDetail.getCode()))
-        ).orElseThrow(() -> new ResourceNotFoundException(ENTITY, sectionDetailId));
-    }
+//    @Override
+//    public SectionDetail update(Long sectionDetailId, SectionDetail sectionDetail) {
+//        Set<ConstraintViolation<SectionDetail>> violations = validator.validate(sectionDetail);
+//        if (!violations.isEmpty())
+//            throw new ResourceValidationException(ENTITY, violations);
+//
+//        return sectionDetailRepository.findById(sectionDetailId).map(data ->
+//                sectionDetailRepository.save(
+//                        data.withName(sectionDetail.getName())
+//                                .withDescription(sectionDetail.getDescription())
+//                                .withCode(sectionDetail.getCode()))
+//        ).orElseThrow(() -> new ResourceNotFoundException(ENTITY, sectionDetailId));
+//    }
 
     @Override
-    public ResponseEntity<?> delete(Long sectionDetailId) {
-        return sectionDetailRepository.findById(sectionDetailId).map(item -> {
+    public ResponseEntity<?> delete(Long studentId) {
+        return sectionDetailRepository.findByStudentId(studentId).map(item -> {
             sectionDetailRepository.delete(item);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, sectionDetailId));
-    }*/
+        }).orElseThrow(() -> new ResourceNotFoundException("STUDENT", studentId));
+    }
 }

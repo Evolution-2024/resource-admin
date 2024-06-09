@@ -38,7 +38,7 @@ public class SectionDetailController {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("id", id);
         parameters.put("studentId", studentId);
-        parameters.put("gradeId", sectionId);
+        parameters.put("sectionId", sectionId);
         parameters.put(ConstantsService.PAGE, page);
         parameters.put(ConstantsService.SIZE, size);
         BaseResponse<List<SectionDetailResource>> response = null;
@@ -78,10 +78,10 @@ public class SectionDetailController {
             response = new BaseResponse<>(e.getMessage());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @DeleteMapping("{sectionDetailId}")
-    public ResponseEntity<?> deleteSectionDetail(@PathVariable Long sectionDetailId) {
-        return sectionDetailService.delete(sectionDetailId);
     }*/
+
+    @DeleteMapping("{studentId}")
+    public ResponseEntity<?> deleteSectionDetail(@PathVariable Long studentId) {
+        return sectionDetailService.delete(studentId);
+    }
 }

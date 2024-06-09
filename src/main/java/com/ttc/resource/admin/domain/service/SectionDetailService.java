@@ -9,6 +9,6 @@ import java.util.Map;
 public interface SectionDetailService {
     List<SectionDetail> getByFilter(Map<String, Object> parameters);
     SectionDetail create(Long sectionId, Long studentId, SectionDetail sectionDetail);
-    /*SectionDetail update(Long sectionDetailId, SectionDetail sectionDetail);
-    ResponseEntity<?> delete(Long sectionDetailId);*/
+//    SectionDetail update(Long sectionDetailId, SectionDetail sectionDetail);
+    ResponseEntity<?> delete(Long studentId);
 }

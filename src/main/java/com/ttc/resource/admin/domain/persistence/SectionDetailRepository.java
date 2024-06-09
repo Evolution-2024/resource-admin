@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface SectionDetailRepository extends JpaRepository<SectionDetail, Long> {
 
@@ -22,4 +24,7 @@ public interface SectionDetailRepository extends JpaRepository<SectionDetail, Lo
             @Param("studentId") Long studentId,
             Pageable pageable
     );
+    boolean existsBySectionIdAndStudentId(Long sectionId, Long studentId);
+    boolean existsByStudentId(Long studentId);
+    Optional<SectionDetail> findByStudentId(Long studentId);
 }
