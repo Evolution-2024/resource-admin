@@ -2,7 +2,6 @@ package com.ttc.resource.admin.api;
 
 import com.ttc.resource.admin.domain.service.AnnouncementService;
 import com.ttc.resource.admin.mapping.AnnouncementMapper;
-import com.ttc.resource.admin.mapping.AnnouncementMapper;
 import com.ttc.resource.admin.resource.announcement.AnnouncementResource;
 import com.ttc.resource.admin.resource.announcement.CreateAnnouncementResource;
 import com.ttc.resource.admin.resource.announcement.UpdateAnnouncementResource;
@@ -23,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/v1/announcements")
 public class AnnouncementController {
+    /*Announcements*/
     @Autowired
     AnnouncementService announcementService;
     @Autowired
@@ -58,7 +58,7 @@ public class AnnouncementController {
     public ResponseEntity<BaseResponse<AnnouncementResource>> createAnnouncement(@RequestBody CreateAnnouncementResource request) {
         BaseResponse<AnnouncementResource> response = null;
         try {
-            AnnouncementResource resource = mapper.toResource(announcementService.create(request.getSectionCode(), request.getStudentCode(), mapper.toModel(request)));
+            AnnouncementResource resource = mapper.toResource(announcementService.create(request.getSectionCode(), request.getTeacherCode(), mapper.toModel(request)));
             response = new BaseResponse<>(resource);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (ResourceValidationException | ResourceNotFoundException e) {

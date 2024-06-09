@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface AnnouncementService {
     List<Announcement> getByFilter(Map<String, Object> parameters);
-    Announcement create(Long sectionId, Long studentId, Announcement competence);
+    Announcement create(Long sectionId, Long teacherId, Announcement competence);
     Announcement update(Announcement request);
     ResponseEntity<?> delete(Long announcementId);
 }

@@ -7,5 +7,5 @@ public class CreateAnnouncementResource {
     private String title;
     private String description;
     private Long sectionCode;
-    private Long studentCode;
+    private Long teacherCode;
 }

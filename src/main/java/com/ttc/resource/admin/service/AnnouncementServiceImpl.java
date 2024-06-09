@@ -53,19 +53,19 @@ public class AnnouncementServiceImpl implements AnnouncementService {
     }
 
     @Override
-    public Announcement create(Long sectionId, Long studentId, Announcement announcement) {
+    public Announcement create(Long sectionId, Long teacherId, Announcement announcement) {
         Set<ConstraintViolation<Announcement>> violations = validator.validate(announcement);
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        ResponseEntity<?> user = feignClient.getUserById(studentId);
+        ResponseEntity<?> user = feignClient.getUserById(teacherId);
 
         if(user.getStatusCode()!= HttpStatus.OK)
-            throw new ResourceNotFoundException("User", studentId);
+            throw new ResourceNotFoundException("User", teacherId);
 
         return sectionRepository.findById(sectionId).map(section -> {
             announcement.setSectionId(section.getId());
-            announcement.setStudentId(studentId);
+            announcement.setTeacherId(teacherId);
             return announcementRepository.save(announcement);
         }).orElseThrow(()->new ResourceNotFoundException("Section ", announcement.getSectionId()));
     }

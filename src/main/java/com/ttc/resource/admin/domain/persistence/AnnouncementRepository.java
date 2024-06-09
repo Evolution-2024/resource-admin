@@ -13,12 +13,12 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
             "where (g.title like concat('%', :filter, '%') or :filter is null) " +
             "and (g.id = :id or :id is null) " +
             "and (g.sectionId = :sectionId or :sectionId is null) " +
-            "and (g.studentId = :studentId or :studentId is null) ")
+            "and (g.teacherId = :teacherId or :teacherId is null) ")
     Page<Announcement> findByFilter(
             @Param("filter") String filter,
             @Param("id") Long id,
             @Param("sectionId") Long sectionId,
-            @Param("studentId") Long studentId,
+            @Param("teacherId") Long teacherId,
             Pageable pageable
     );
 }
