@@ -44,12 +44,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         String filter = (String) parameters.get("filter");
         Long id = (Long) parameters.get("id");
         Long sectionId = (Long) parameters.get("sectionId");
-        Long studentId = (Long) parameters.get("studentId");
+        Long teacherId = (Long) parameters.get("teacherId");
 
         int page = Integer.parseInt((String) parameters.get(ConstantsService.PAGE));
         int size = Integer.parseInt((String) parameters.get(ConstantsService.SIZE));
         Pageable pageable = PageRequest.of(page, size);
-        return announcementRepository.findByFilter(filter,id,sectionId, studentId, pageable).getContent();
+        return announcementRepository.findByFilter(filter,id,sectionId, teacherId, pageable).getContent();
     }
 
     @Override

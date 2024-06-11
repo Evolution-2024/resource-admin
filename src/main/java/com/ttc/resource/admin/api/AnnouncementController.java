@@ -33,7 +33,7 @@ public class AnnouncementController {
             @RequestParam(required = false) String filter,
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) Long sectionId,
-            @RequestParam(required = false) Long studentId,
+            @RequestParam(required = false) Long teacherId,
             @RequestParam(defaultValue = DefaultParams.PAGE) String page,
             @RequestParam(defaultValue = DefaultParams.SIZE) String size
     ) {
@@ -41,7 +41,7 @@ public class AnnouncementController {
         parameters.put("filter", filter);
         parameters.put("id", id);
         parameters.put("sectionId", sectionId);
-        parameters.put("studentId", studentId);
+        parameters.put("teacherId", teacherId);
         parameters.put(ConstantsService.PAGE, page);
         parameters.put(ConstantsService.SIZE, size);
         BaseResponse<List<AnnouncementResource>> response = null;
