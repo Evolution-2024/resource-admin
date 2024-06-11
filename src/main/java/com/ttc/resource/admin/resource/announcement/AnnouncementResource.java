@@ -8,5 +8,5 @@ public class AnnouncementResource {
     private String title;
     private String description;
     private Long teacherId;
-    private Long studentId;
+    private Long sectionId;
 }
