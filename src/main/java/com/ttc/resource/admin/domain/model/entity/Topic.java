@@ -31,12 +31,10 @@ public class Topic extends AuditModel {
     @Size(max = 300)
     private String description;
 
-    @NotNull
-    @NotBlank
-    @Lob
-    @Type(type = "org.hibernate.type.TextType")
     private String file;
-
+    @Lob
+    @Column(columnDefinition = "LONGBLOB")
+    private byte[] file_data;
 
     //relation with courses
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

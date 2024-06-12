@@ -16,8 +16,6 @@ public class CreateTopicResource {
     @NotBlank
     private String description;
 
-    @NotNull
-    @NotBlank
     private String file;
     private Long courseId;
 }

@@ -54,9 +54,11 @@ public class TopicController {
     }
     @PostMapping
     public ResponseEntity<BaseResponse<TopicResource>> createTopic(@RequestBody CreateTopicResource request) {
+        String file = request.getFile();
+        request.setFile(null);
         BaseResponse<TopicResource> response = null;
         try {
-            TopicResource resource = mapper.toResource(topicService.create(mapper.toModel(request),request.getCourseId()));
+            TopicResource resource = mapper.toResource(topicService.create(mapper.toModel(request),request.getCourseId(),file));
             response = new BaseResponse<>(resource);
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (ResourceValidationException | ResourceNotFoundException e) {
@@ -66,9 +68,11 @@ public class TopicController {
     }
     @PutMapping
     public ResponseEntity<BaseResponse<TopicResource>> updateTopic(@RequestBody UpdateTopicResource request) {
+        String file = request.getFile();
+        request.setFile(null);
         BaseResponse<TopicResource> response = null;
         try {
-            var course = topicService.update(mapper.toModel(request));
+            var course = topicService.update(mapper.toModel(request), file);
             TopicResource resource = mapper.toResource(course);
             response = new BaseResponse<>(resource);
             return new ResponseEntity<>(response, HttpStatus.OK);

@@ -16,7 +16,5 @@ public class UpdateTopicResource {
     @NotBlank
     private String description;
 
-    @NotNull
-    @NotBlank
     private String file;
 }

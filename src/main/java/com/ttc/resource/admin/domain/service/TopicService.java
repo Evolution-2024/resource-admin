@@ -10,7 +10,7 @@ import java.util.Map;
 
 public interface TopicService {
     List<Topic> getByFilter(Map<String, Object> parameters);
-    Topic create(Topic request, Long courseId);
-    Topic update(Topic request);
+    Topic create(Topic request, Long courseId, String file);
+    Topic update(Topic request, String file);
     ResponseEntity<?> delete(Long itemId);
 }

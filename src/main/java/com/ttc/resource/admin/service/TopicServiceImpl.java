@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -38,14 +39,23 @@ public class TopicServiceImpl implements TopicService {
         int page = Integer.parseInt((String) parameters.get(ConstantsService.PAGE));
         int size = Integer.parseInt((String) parameters.get(ConstantsService.SIZE));
         Pageable pageable = PageRequest.of(page, size);
-        return topicRepository.findByFilter(filter,id,courseId,pageable).getContent();
+        List<Topic> list = topicRepository.findByFilter(filter,id,courseId,pageable).getContent();
+        list.forEach(p -> {
+            if (p.getFile_data() != null)
+                p.setFile(Base64.getEncoder().encodeToString(p.getFile_data()));
+        });
+        return list;
     }
 
     @Override
-    public Topic create(Topic request, Long courseId) {
+    public Topic create(Topic request, Long courseId, String file) {
         Set<ConstraintViolation<Topic>> violations = validator.validate(request);
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
+        if (file != null) {
+            byte[] fileBytes = Base64.getDecoder().decode(file);
+            request.setFile_data(fileBytes);
+        }
         return courseRepository.findById(courseId).map(course -> {
             request.setId(null);
             request.setCourse(course);
@@ -54,16 +64,22 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public Topic update(Topic request) {
+    public Topic update(Topic request, String file) {
         Set<ConstraintViolation<Topic>> violations = validator.validate(request);
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
+
+        if (file != null) {
+            byte[] fileBytes = Base64.getDecoder().decode(file);
+            request.setFile_data(fileBytes);
+        }
 
         return topicRepository.findById(request.getId()).map(topic ->
                 topicRepository.save(topic
                         .withTitle(request.getTitle())
                         .withDescription(request.getDescription())
                         .withFile(request.getFile())
+                        .withFile_data(request.getFile_data())
                 )).orElseThrow(() -> new ResourceNotFoundException(ENTITY, request.getId()));
     }
 
