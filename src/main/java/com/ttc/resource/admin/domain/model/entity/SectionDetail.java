@@ -30,5 +30,5 @@ public class SectionDetail extends AuditModel {
     @JoinColumn(name = "section_id", nullable = false)
     private Section section;
 
-    private Long studentId;
+    private Long studentCode;
 }

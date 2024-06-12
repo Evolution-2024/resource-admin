@@ -58,16 +58,17 @@ public class SectionDetailServiceImpl implements SectionDetailService {
         if(user.getStatusCode()!= HttpStatus.OK)
             throw new ResourceNotFoundException("User", studentId);
 
-        var exist = sectionDetailRepository.existsBySectionIdAndStudentId(sectionId, studentId);
+        var exist = sectionDetailRepository.existsBySectionIdAndStudentCode(sectionId, studentId);
         if(exist)
             throw new ResourceNotFoundException("Estudiante ya asignado a la sección");
-        if (sectionDetailRepository.existsByStudentId(studentId)) {
+        if (sectionDetailRepository.existsByStudentCode(studentId)) {
             throw new ResourceNotFoundException("Estudiante ya asignado a otra sección");
         }
 
         return sectionRepository.findById(sectionId).map(section -> {
             sectionDetail.setSection(section);
-            sectionDetail.setStudentId(studentId);
+            sectionDetail.setId(null);
+            sectionDetail.setStudentCode(studentId);
             return sectionDetailRepository.save(sectionDetail);
         }).orElseThrow(()->new ResourceNotFoundException("Setion ",sectionId));
     }
@@ -88,7 +89,7 @@ public class SectionDetailServiceImpl implements SectionDetailService {
 
     @Override
     public ResponseEntity<?> delete(Long studentId) {
-        return sectionDetailRepository.findByStudentId(studentId).map(item -> {
+        return sectionDetailRepository.findByStudentCode(studentId).map(item -> {
             sectionDetailRepository.delete(item);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new ResourceNotFoundException("STUDENT", studentId));

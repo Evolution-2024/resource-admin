@@ -9,6 +9,6 @@ import javax.validation.constraints.Size;
 @Data
 public class CreateSectionDetailResource {
     private String studentUsername;
-    private Long sectionCode;
+    private Long sectionId;
     private Long studentCode;
 }

@@ -8,5 +8,5 @@ public class SectionDetailResource {
     private Long id;
     private String studentUsername;
     private SectionResource section;
-    private Long studentId;
+    private Long studentCode;
 }

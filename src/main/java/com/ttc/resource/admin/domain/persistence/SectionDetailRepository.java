@@ -17,14 +17,14 @@ public interface SectionDetailRepository extends JpaRepository<SectionDetail, Lo
     @Query(value = "select g from SectionDetail g " +
             "where (g.id = :id or :id is null) " +
             "and (g.section.id = :sectionId or :sectionId is null) " +
-            "and (g.studentId = :studentId or :studentId is null) ")
+            "and (g.studentCode = :studentId or :studentId is null) ")
     Page<SectionDetail> findByFilter(
             @Param("id") Long id,
             @Param("sectionId") Long sectionId,
             @Param("studentId") Long studentId,
             Pageable pageable
     );
-    boolean existsBySectionIdAndStudentId(Long sectionId, Long studentId);
-    boolean existsByStudentId(Long studentId);
-    Optional<SectionDetail> findByStudentId(Long studentId);
+    boolean existsBySectionIdAndStudentCode(Long sectionId, Long studentCode);
+    boolean existsByStudentCode(Long studentCode);
+    Optional<SectionDetail> findByStudentCode(Long studentCode);
 }
