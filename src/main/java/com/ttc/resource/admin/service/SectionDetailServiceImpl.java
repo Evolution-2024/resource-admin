@@ -89,7 +89,7 @@ public class SectionDetailServiceImpl implements SectionDetailService {
 
     @Override
     public ResponseEntity<?> delete(Long studentId) {
-        return sectionDetailRepository.findByStudentCode(studentId).map(item -> {
+        return sectionDetailRepository.findById(studentId).map(item -> {
             sectionDetailRepository.delete(item);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new ResourceNotFoundException("STUDENT", studentId));
