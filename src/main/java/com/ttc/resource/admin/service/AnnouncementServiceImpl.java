@@ -64,10 +64,10 @@ public class AnnouncementServiceImpl implements AnnouncementService {
             throw new ResourceNotFoundException("User", teacherId);
 
         return sectionRepository.findById(sectionId).map(section -> {
-            announcement.setSectionId(section.getId());
-            announcement.setTeacherId(teacherId);
+            announcement.setSectionCode(section.getId());
+            announcement.setTeacherCode(teacherId);
             return announcementRepository.save(announcement);
-        }).orElseThrow(()->new ResourceNotFoundException("Section ", announcement.getSectionId()));
+        }).orElseThrow(()->new ResourceNotFoundException("Section ", announcement.getSectionCode()));
     }
 
     @Override
