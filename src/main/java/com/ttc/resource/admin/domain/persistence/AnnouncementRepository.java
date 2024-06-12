@@ -12,8 +12,8 @@ public interface AnnouncementRepository extends JpaRepository<Announcement, Long
     @Query(value = "select g from Announcement g " +
             "where (g.title like concat('%', :filter, '%') or :filter is null) " +
             "and (g.id = :id or :id is null) " +
-            "and (g.sectionId = :sectionId or :sectionId is null) " +
-            "and (g.teacherId = :teacherId or :teacherId is null) ")
+            "and (g.sectionCode = :sectionId or :sectionId is null) " +
+            "and (g.teacherCode = :teacherId or :teacherId is null) ")
     Page<Announcement> findByFilter(
             @Param("filter") String filter,
             @Param("id") Long id,

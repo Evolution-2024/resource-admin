@@ -32,16 +32,16 @@ public class AnnouncementController {
     public ResponseEntity<BaseResponse<List<AnnouncementResource>>> getAllAnnouncements(
             @RequestParam(required = false) String filter,
             @RequestParam(required = false) Long id,
-            @RequestParam(required = false) Long sectionId,
-            @RequestParam(required = false) Long teacherId,
+            @RequestParam(required = false) Long sectionCode,
+            @RequestParam(required = false) Long teacherCode,
             @RequestParam(defaultValue = DefaultParams.PAGE) String page,
             @RequestParam(defaultValue = DefaultParams.SIZE) String size
     ) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("filter", filter);
         parameters.put("id", id);
-        parameters.put("sectionId", sectionId);
-        parameters.put("teacherId", teacherId);
+        parameters.put("sectionId", sectionCode);
+        parameters.put("teacherId", teacherCode);
         parameters.put(ConstantsService.PAGE, page);
         parameters.put(ConstantsService.SIZE, size);
         BaseResponse<List<AnnouncementResource>> response = null;

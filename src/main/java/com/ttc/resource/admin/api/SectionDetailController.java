@@ -30,14 +30,14 @@ public class SectionDetailController {
     @GetMapping
     public  ResponseEntity<BaseResponse<List<SectionDetailResource>>> getAll(
             @RequestParam(required = false) Long id,
-            @RequestParam(required = false) Long studentId,
+            @RequestParam(required = false) Long studentCode,
             @RequestParam(required = false) Long sectionId,
             @RequestParam(defaultValue = DefaultParams.PAGE) String page,
             @RequestParam(defaultValue = DefaultParams.SIZE) String size
     ) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("id", id);
-        parameters.put("studentId", studentId);
+        parameters.put("studentId", studentCode);
         parameters.put("sectionId", sectionId);
         parameters.put(ConstantsService.PAGE, page);
         parameters.put(ConstantsService.SIZE, size);
@@ -56,7 +56,7 @@ public class SectionDetailController {
     public ResponseEntity<BaseResponse<SectionDetailResource>> postSectionDetail(@RequestBody CreateSectionDetailResource request) {
         BaseResponse<SectionDetailResource> response = null;
         try {
-            var sectionDetail = sectionDetailService.create(request.getSectionCode(), request.getStudentCode(), mapper.toModel(request));
+            var sectionDetail = sectionDetailService.create(request.getSectionId(), request.getStudentCode(), mapper.toModel(request));
             SectionDetailResource resource = mapper.toResource(sectionDetail);
             response = new BaseResponse<>(resource);
             return new ResponseEntity<>(response, HttpStatus.OK);

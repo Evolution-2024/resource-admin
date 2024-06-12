@@ -35,6 +35,6 @@ public class Announcement extends AuditModel {
     @Type(type = "org.hibernate.type.TextType")
     private String description;
 
-    private Long teacherId;
-    private Long sectionId;
+    private Long teacherCode;
+    private Long sectionCode;
 }
