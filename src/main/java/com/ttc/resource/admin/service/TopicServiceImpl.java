@@ -7,6 +7,8 @@ import com.ttc.resource.admin.domain.service.TopicService;
 import com.ttc.resource.shared.domain.constants.ConstantsService;
 import com.ttc.resource.shared.exception.ResourceNotFoundException;
 import com.ttc.resource.shared.exception.ResourceValidationException;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +45,15 @@ public class TopicServiceImpl implements TopicService {
         Pageable pageable = PageRequest.of(page, size);
         List<Topic> list = topicRepository.findByFilter(filter,id,courseId,pageable).getContent();
         list.forEach(p -> {
-            if (p.getFile_data() != null)
+            if (p.getFile_data() != null) {
                 p.setFile(Base64.getEncoder().encodeToString(p.getFile_data()));
+                try {
+                    String content = extractTextFromPDF(p.getFile_data());
+                    p.setContent(content);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         });
         return list;
     }
@@ -89,5 +100,11 @@ public class TopicServiceImpl implements TopicService {
             topicRepository.delete(topic);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new ResourceNotFoundException(ENTITY, itemId));
+    }
+    private String extractTextFromPDF(byte[] pdfData) throws IOException {
+        try (PDDocument document = PDDocument.load(new ByteArrayInputStream(pdfData))) {
+            PDFTextStripper pdfStripper = new PDFTextStripper();
+            return pdfStripper.getText(document);
+        }
     }
 }

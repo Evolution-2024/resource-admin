@@ -36,6 +36,10 @@ public class Topic extends AuditModel {
     @Column(columnDefinition = "LONGBLOB")
     private byte[] file_data;
 
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    private String content;
+
     //relation with courses
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "course_id", nullable = false)
