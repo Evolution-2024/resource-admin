@@ -40,4 +40,7 @@ public class Course extends AuditModel {
     @JoinTable(name="competence_course", joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "competence_id"))
     private List<Competence> competences;
+
+    @OneToMany( mappedBy = "course", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    List<Lesson> lessons;
 }

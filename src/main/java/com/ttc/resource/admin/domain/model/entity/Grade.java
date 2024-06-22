@@ -1,5 +1,6 @@
 package com.ttc.resource.admin.domain.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ttc.resource.shared.domain.model.AuditModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -34,4 +36,8 @@ public class Grade extends AuditModel {
     @Size(max = 300)
     @Type(type = "org.hibernate.type.TextType")
     private String description;
+
+    @OneToMany( mappedBy = "grade", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JsonManagedReference
+    List<Section> sections;
 }

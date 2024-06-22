@@ -1,5 +1,6 @@
 package com.ttc.resource.admin.domain.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ttc.resource.shared.domain.model.AuditModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,8 +44,12 @@ public class Section extends AuditModel {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "grade_id", nullable = false)
+    @JsonBackReference
     private Grade grade;
 
     @OneToMany( mappedBy = "section", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     List<SectionDetail> details;
+
+    @OneToMany( mappedBy = "section", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    List<Lesson> lessons;
 }
