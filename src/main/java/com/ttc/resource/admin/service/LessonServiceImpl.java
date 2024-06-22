@@ -53,6 +53,9 @@ public class LessonServiceImpl implements LessonService {
 
         if(lessonRepository.existsBySectionIdAndCourseIdAndTeacherCode(sectionId,courseId,lesson.getTeacherCode()))
             throw new ResourceValidationException("Este profesor ya enseña el curso en la sección");
+        if(lessonRepository.existsBySectionIdAndCourseId(sectionId,courseId)) {
+            throw new ResourceValidationException("Este curso ya se enseña en la sección");
+        }
 
         System.out.println("LESSON => ");
         System.out.println(lesson);

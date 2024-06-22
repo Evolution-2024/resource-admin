@@ -22,5 +22,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
             @Param("teacherCode") Long teacherCode,
             Pageable pageable
     );
+    boolean existsBySectionIdAndCourseId(Long sectionId, Long courseId);
     boolean existsBySectionIdAndCourseIdAndTeacherCode(Long sectionId, Long courseId,Long teacherCode);
 }
